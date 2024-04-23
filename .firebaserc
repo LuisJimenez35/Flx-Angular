@@ -1,0 +1,14 @@
+{
+  "targets": {
+    "FlixAngularDB": {
+      "hosting": {
+        "empathylink-app": [
+          "FlixAngularDB"
+        ]
+      }
+    }
+  },
+  "projects": {
+    "default": "FlixAngularDB"
+  }
+}
