@@ -4,6 +4,7 @@ import { MovieApiServiceService } from '../../services/movie-api-service.service
 import { Title, Meta } from '@angular/platform-browser';
 import { ReactiveFormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-search',
@@ -37,7 +38,7 @@ export class SearchComponent implements OnInit {
 
 @NgModule({
     declarations: [SearchComponent],
-    imports: [ReactiveFormsModule, RouterModule],
+    imports: [ReactiveFormsModule, RouterModule, CommonModule],
     exports: [SearchComponent],
 })
 export class SearchModule {}
