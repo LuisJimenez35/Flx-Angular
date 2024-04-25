@@ -1,37 +1,31 @@
-<div class="contain mt-5">
-        <div class="row p-5">
-            <div class="col-lg-2" *ngIf="getMovieDetailResult.poster_path">
-                    <img 
-                    src="https://image.tmdb.org/t/p/original/{{ getMovieDetailResult.poster_path }}" 
-                    >
-            </div>
-            <div class="col-lg-10 mt-5 p-4">
-                    <h1 class="mt-2 mb-2">{{getMovieDetailResult.original_title}}</h1>
-                    <p class="mt-3 mb-3">{{getMovieDetailResult.overview}}</p>
-                    <a class="btn btn-md" href="https://www.themoviedb.org/video/play?key={{getMovieVideoResult}}" 
-                    target="_blank"
-                    >watch trailer</a>
+<div class="container mt-5">
+    <div class="row p-5">
+        <div class="col-lg-2" *ngIf="getMovieDetailResult?.poster_path">
+            <img src="https://image.tmdb.org/t/p/original/{{ getMovieDetailResult.poster_path }}" class="img-fluid" alt="Movie Poster">
+        </div>
+        <div class="col-lg-10 mt-lg-0 mt-4 p-4">
+            <h1 class="mt-2 mb-3">{{ getMovieDetailResult?.original_title }}</h1>
+            <p class="mt-3 mb-3">{{ getMovieDetailResult?.overview }}</p>
+            <a class="btn btn-md btn-primary" href="https://www.themoviedb.org/video/play?key={{ getMovieVideoResult }}" target="_blank">Watch Trailer</a>
 
-                    <div class="mt-4 p-4">
-                        <h2 class="text-white">Top Cast</h2>
-                        <div class="row">
-                        <div class="col-lg-4" *ngFor="let c of getMovieCastResult">
+            <div class="mt-4 p-4">
+                <h2 class="text-white mb-3">Top Cast</h2>
+                <div class="row">
+                    <ng-container *ngFor="let c of getMovieCastResult">
+                        <div class="col-lg-4" *ngIf="c.profile_path">
                             <div class="row mt-2 mb-2">
-                                <div class="col-lg-2" *ngIf="c.profile_path">
-                                    <img 
-                                    src="https://image.tmdb.org/t/p/original/{{ c.profile_path}}" 
-                                    >
+                                <div class="col-lg-4">
+                                    <img src="https://image.tmdb.org/t/p/original/{{ c.profile_path }}" class="img-fluid rounded-circle" alt="Actor Image">
                                 </div>
-                                <div class="col-lg-10">
-                                    <h3 class="text-white">{{c.original_name}}</h3>
-                                    <p class="text-white">{{c.character}}</p>
+                                <div class="col-lg-8">
+                                    <h3 class="text-white mb-1">{{ c.original_name }}</h3>
+                                    <p class="text-white">{{ c.character }}</p>
                                 </div>
                             </div>
-
-                            </div>
-
                         </div>
-                    </div>
+                    </ng-container>
+                </div>
             </div>
         </div>
+    </div>
 </div>
