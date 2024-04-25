@@ -12,8 +12,12 @@ import { user } from '@angular/fire/auth';
   styleUrls: ['./adminwindow.component.css']
 })
 export class AdminwindowComponent implements OnInit {
+openEditModal(_t90: any) {
+throw new Error('Method not implemented.');
+}
   users$: Observable<any[]> | undefined;
   newUser: any={};
+  selectedUser: any={};
 
   constructor(
     private firebaseService: GenericFirebaseService,
@@ -71,6 +75,23 @@ export class AdminwindowComponent implements OnInit {
                 error: (error) => {
                     console.error('Error registering user:', error);
                 }
+            });
+        }
+    }
+
+    updateUser(updateUserForm: any): void {
+        if (updateUserForm.valid) {
+            this.firebaseService.UpdateDocument('test1-Userinformation', this.selectedUser.id, {
+                username: this.selectedUser.username,
+                email: this.selectedUser.email,
+                rol: this.selectedUser.rol,
+            }).then(() => {
+                updateUserForm.reset();
+                this.selectedUser = {};
+                document.getElementById('editUserModal')?.classList.remove('show');
+                document.querySelector('.modal-backdrop')?.remove();
+            }).catch((error) => {
+                console.error('Error updating user in Firestore:', error);
             });
         }
     }

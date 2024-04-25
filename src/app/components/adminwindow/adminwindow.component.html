@@ -3,6 +3,34 @@
 
 <h1>Admin Window</h1>
 
+<!-- Modal de edición de usuario -->
+<div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editUserModalLabel">Edit User Information</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form #editUserForm="ngForm" (ngSubmit)="updateUser(editUserForm)">
+            <div class="mb-3">
+              <label for="editUsername" class="form-label">Username</label>
+              <input type="text" class="form-control" id="editUsername" name="editUsername" [(ngModel)]="selectedUser.username" required>
+            </div>
+            <div class="mb-3">
+              <label for="editEmail" class="form-label">Email</label>
+              <input type="email" class="form-control" id="editEmail" name="editEmail" [(ngModel)]="selectedUser.email" required>
+            </div>
+            <div class="mb-3">
+              <label for="editRol" class="form-label">Rol</label>
+              <input type="text" class="form-control" id="editRol" name="editRol" [(ngModel)]="selectedUser.rol" required>
+            </div>
+            <button type="submit" class="btn btn-primary">Update</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
 
 <!-- Agregar el modal -->
 <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="addUserModalLabel" aria-hidden="true">
@@ -54,12 +82,10 @@
       <td>{{ user.username }}</td>
       <td>{{ user.email }}</td>
       <td>{{ user.rol }}</td>
-      <td><button type="button" class="btn btn-primary">Edit User</button></td>
+      <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal" (click)="openEditModal(user)">Edit User Information</button></td>
       <td><button type="button" class="btn btn-danger" (click)="deleteUser(user.id)">Delete User</button></td>
     </tr>
   </tbody>
 </table>
 
 <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#addUserModal">Add User</button>
-
-
