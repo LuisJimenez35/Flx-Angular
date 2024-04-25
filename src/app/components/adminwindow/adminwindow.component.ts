@@ -12,9 +12,7 @@ import { user } from '@angular/fire/auth';
   styleUrls: ['./adminwindow.component.css']
 })
 export class AdminwindowComponent implements OnInit {
-openEditModal(_t90: any) {
-throw new Error('Method not implemented.');
-}
+
   users$: Observable<any[]> | undefined;
   newUser: any={};
   selectedUser: any={};
@@ -29,6 +27,10 @@ throw new Error('Method not implemented.');
   ngOnInit(): void {
     this.users$ = this.firebaseService.GetAllDocumentsWithIds('test1-Userinformation');
   }
+
+    openEditModal(user: any): void {
+        this.selectedUser = user;
+    }
 
     //Create user
     addUser(addUserForm: any): void {
@@ -111,7 +113,6 @@ throw new Error('Method not implemented.');
             console.error('No user selected for deletion.');
         }
     }
-
 
 }
 
