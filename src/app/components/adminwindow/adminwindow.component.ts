@@ -1,8 +1,10 @@
 import { Component, NgModule, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Observable } from 'rxjs';
+import { FormsModule } from '@angular/forms';
 import { GenericFirebaseService } from '../../services/Firebase/FirestoreDB/generic-firebase.service';
 import { AuthService } from '../../services/Firebase/Auth/auth.service';
+import { user } from '@angular/fire/auth';
 
 @Component({
   selector: 'app-adminwindow',
@@ -11,6 +13,7 @@ import { AuthService } from '../../services/Firebase/Auth/auth.service';
 })
 export class AdminwindowComponent implements OnInit {
   users$: Observable<any[]> | undefined;
+  newUser: any={};
 
   constructor(
     private firebaseService: GenericFirebaseService,
@@ -47,6 +50,31 @@ export class AdminwindowComponent implements OnInit {
         }
     }
 
+    addUser(addUserForm: any): void {
+        if (addUserForm.valid) {
+            this.authService.register(this.newUser.email, this.newUser.password, this.newUser.username)
+            .subscribe({
+                next: (userId) => {
+                    this.firebaseService.AddDocument('test1-Userinformation', userId, {
+                        username: this.newUser.username,
+                        email: this.newUser.email,
+                        rol: 'user',
+                    }).then(() => {
+                        addUserForm.reset();
+                        this.newUser = {};
+                        document.getElementById('addUserModal')?.classList.remove('show');
+                        document.querySelector('.modal-backdrop')?.remove();
+                    }).catch((error) => {
+                        console.error('Error adding user to Firestore:', error);
+                    });
+                },
+                error: (error) => {
+                    console.error('Error registering user:', error);
+                }
+            });
+        }
+    }
+
 }
 
 @NgModule({
@@ -54,7 +82,8 @@ export class AdminwindowComponent implements OnInit {
     AdminwindowComponent
   ],
   imports: [
-    CommonModule
+    CommonModule,
+    FormsModule
   ]
 })
 export class AdminwindowModule { }
