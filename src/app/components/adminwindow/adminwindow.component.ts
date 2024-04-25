@@ -24,11 +24,12 @@ throw new Error('Method not implemented.');
     private authService: AuthService
   ) {}
 
+  //View all users
   ngOnInit(): void {
     this.users$ = this.firebaseService.GetAllDocumentsWithIds('test1-Userinformation');
   }
 
-
+    //Create user
     addUser(addUserForm: any): void {
         if (addUserForm.valid) {
             this.authService.register(this.newUser.email, this.newUser.password, this.newUser.username)
@@ -54,6 +55,7 @@ throw new Error('Method not implemented.');
         }
     }
 
+    //Update user
     updateUser(updateUserForm: any): void {
         if (updateUserForm.valid) {
             this.firebaseService.UpdateDocument('test1-Userinformation', this.selectedUser.id, {
