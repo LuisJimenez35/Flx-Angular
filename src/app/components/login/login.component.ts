@@ -21,7 +21,7 @@ export class LogicComponent {
 
     form = this.fb.nonNullable.group({
         email: ['luismorajimenez35@gmail.com', Validators.required],
-        password: ['Halobat17', Validators.required],
+        password: ['Halobat17.', Validators.required],
     });
     errorMessage: string | null = null;
 
