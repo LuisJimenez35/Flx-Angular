@@ -3,6 +3,26 @@
 
 <h1>Admin Window</h1>
 
+
+<!-- Agregar el modal de confirmación de eliminación -->
+<div class="modal fade" id="deleteUserModal" tabindex="-1" aria-labelledby="deleteUserModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="deleteUserModalLabel">Confirm Delete User</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p>Are you sure you want to delete the user: {{ selectedUserToDelete?.username }}?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancel</button>
+          <button type="button" class="btn btn-danger" (click)="deleteUser()">Delete</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
 <!-- Modal de edición de usuario -->
 <div class="modal fade" id="editUserModal" tabindex="-1" aria-labelledby="editUserModalLabel" aria-hidden="true">
     <div class="modal-dialog">
@@ -83,7 +103,7 @@
       <td>{{ user.email }}</td>
       <td>{{ user.rol }}</td>
       <td><button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#editUserModal" (click)="openEditModal(user)">Edit User Information</button></td>
-      <td><button type="button" class="btn btn-danger" >Delete User</button></td>
+      <td><button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteUserModal" (click)="prepareDeleteUser(user)">Delete User</button></td>
     </tr>
   </tbody>
 </table>

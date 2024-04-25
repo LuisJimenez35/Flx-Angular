@@ -18,6 +18,7 @@ throw new Error('Method not implemented.');
   users$: Observable<any[]> | undefined;
   newUser: any={};
   selectedUser: any={};
+  selectedUserToDelete: any;
 
   constructor(
     private firebaseService: GenericFirebaseService,
@@ -72,6 +73,45 @@ throw new Error('Method not implemented.');
             });
         }
     }
+
+    prepareDeleteUser(user: any): void {
+        this.selectedUserToDelete = user;
+    }
+
+    //Delete user
+    deleteUser():void{
+        if (this.selectedUserToDelete) {
+            const userId = this.selectedUserToDelete.id; // Paso 1
+            this.firebaseService.DeleteDocument('test1-Userinformation', userId) // Paso 2
+                .then(() => {
+                    // Obtener el UID del usuario a eliminar
+                    this.authService.findUidByEmail(this.selectedUserToDelete.email)
+                        .then((uid) => {
+                            if (uid) {
+                                this.authService.deleteUser(uid) // Paso 3
+                                    .then(() => {
+                                        // Eliminación exitosa
+                                        console.log('User deleted successfully.');
+                                    })
+                                    .catch((error) => {
+                                        console.error('Error deleting user from Firebase Authentication:', error);
+                                    });
+                            } else {
+                                console.error('UID not found for the user:', this.selectedUserToDelete.email);
+                            }
+                        })
+                        .catch((error) => {
+                            console.error('Error finding UID for the user:', this.selectedUserToDelete.email, error);
+                        });
+                })
+                .catch((error) => {
+                    console.error('Error deleting user from Firestore:', error);
+                });
+        } else {
+            console.error('No user selected for deletion.');
+        }
+    }
+
 
 }
 
